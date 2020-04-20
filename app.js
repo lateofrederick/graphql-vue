@@ -1,6 +1,6 @@
 const express = require('express');
 const graphqlHttp = require('express-graphql');
-const schema = require('./schema/schema');
+const schema = require('./server/schema/schema');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const serveStatic = require('serve-static');
@@ -10,13 +10,13 @@ const app = express();
 
 app.use(cors());
 
-app.use('/', serveStatic(path.join('../frontend', '/dist')))
+app.use('/', serveStatic(path.join(__dirname, '/dist')))
 
 const port = process.env.PORT || 8080
 // connecting to database
 mongoose.connect('mongodb+srv://lateo:killme2016@frontend-5wbny.mongodb.net/test?retryWrites=true&w=majority');
 mongoose.connection.once('open', () => {
-	console.log("connection successful");
+	// console.log("connection successful");
 })
 
 app.use('/graphql', graphqlHttp({
